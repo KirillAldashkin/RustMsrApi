@@ -4,12 +4,12 @@ use core::{fmt, ops::{Deref, DerefMut}};
 
 use alloc::{string::String, vec::Vec};
 #[cfg(feature = "serde")]
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use url::Url;
 
 /// Error returned by the service.
 #[derive(Debug, Hash, Clone, PartialEq, Eq)]
-#[cfg_attr(feature = "serde", derive(Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Error {
     /// Numeric type of this error.
     pub code: u32,
@@ -50,11 +50,11 @@ impl<T> From<Response<T>> for Result<T, Error> {
 }
 
 #[cfg(feature = "serde")]
-mod response_deserialize;
+mod response_serde;
 
 /// ID used by all content.
 #[derive(Debug, Hash, Clone, PartialEq, Eq, PartialOrd, Ord)]
-#[cfg_attr(feature = "serde", derive(Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Cid(pub String);
 
 impl fmt::Display for Cid {
@@ -65,7 +65,7 @@ impl fmt::Display for Cid {
 
 /// Common info on an album, returned by [`GetAlbums`](super::action::GetAlbums).
 #[derive(Debug, Hash, Clone)]
-#[cfg_attr(feature = "serde", derive(Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct AlbumInfo {
     /// ID of this album.
     pub cid: Cid,
@@ -80,7 +80,7 @@ pub struct AlbumInfo {
 
 /// An album, returned by [`GetAlbumData`](super::action::GetAlbumData).
 #[derive(Debug, Hash, Clone)]
-#[cfg_attr(feature = "serde", derive(Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct AlbumData {
     /// ID of this album.
     pub cid: Cid,
@@ -102,7 +102,7 @@ pub struct AlbumData {
 
 /// An album, returned by [`GetAlbumDetail`](super::action::GetAlbumDetail).
 #[derive(Debug, Hash, Clone)]
-#[cfg_attr(feature = "serde", derive(Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct AlbumDetail {
     /// ID of this album.
     pub cid: Cid,
@@ -124,7 +124,7 @@ pub struct AlbumDetail {
 
 /// Song reference used in [`AlbumDetail`].
 #[derive(Debug, Hash, Clone)]
-#[cfg_attr(feature = "serde", derive(Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Song {
     /// ID of this song.
     pub cid: Cid,
@@ -136,7 +136,7 @@ pub struct Song {
 
 /// List of songs, returned by [`GetSongs`](super::action::GetSongs)
 #[derive(Debug, Hash, Clone)]
-#[cfg_attr(feature = "serde", derive(Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct SongsInfo {
     /// All released songs.
     pub list: Vec<SongInfo>,
@@ -146,7 +146,7 @@ pub struct SongsInfo {
 
 /// Common info on a song, used in [`SongsInfo`].
 #[derive(Debug, Hash, Clone)]
-#[cfg_attr(feature = "serde", derive(Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct SongInfo {
     /// ID of this song.
     pub cid: Cid,
@@ -161,7 +161,7 @@ pub struct SongInfo {
 
 /// A song, returned by [`GetSong`](super::action::GetSong).
 #[derive(Debug, Hash, Clone)]
-#[cfg_attr(feature = "serde", derive(Deserialize))]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct SongData {
     /// ID of this song.
     pub cid: Cid,
