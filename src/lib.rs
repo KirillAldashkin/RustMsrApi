@@ -6,6 +6,7 @@ extern crate alloc;
 pub mod action;
 pub mod model;
 #[cfg(feature = "reqwest")]
+#[cfg_attr(docsrs, doc(cfg(feature = "reqwest")))]
 pub mod reqwest;
 
 /// Base API URL of the official service.

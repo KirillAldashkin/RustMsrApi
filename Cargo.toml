@@ -1,11 +1,15 @@
 [package]
 name = "msrec"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "Wrapper for API of Monster Siren Records music service."
 license = "MIT"
 authors = ["Kirill Aldashkin"]
 repository = "https://github.com/KirillAldashkin/RustMsrApi"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "doc_cfg"]
 
 [dependencies]
 serde = { version = "1.0.229", default-features = false, optional = true }
